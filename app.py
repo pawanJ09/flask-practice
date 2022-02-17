@@ -11,7 +11,15 @@ items = []
 class Item(Resource):
 
     def get(self, name):
-        return {'student': name}
+        for item in items:
+            if name == item['name']:
+                return item
+        return {'item': None}, 404
+
+    def post(self, name):
+        item = {'name': name, 'price': 12.00}
+        items.append(item)
+        return item, 201
 
 
 api.add_resource(Item, '/item/<string:name>')
